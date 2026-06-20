@@ -36,6 +36,87 @@
             text-transform: uppercase;
         }
 
+        /* --- ÉCRAN DE CONNEXION SÉCURISÉ --- */
+        #login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--sheriff-dark-brown);
+            z-index: 9999; /* Reste toujours au-dessus du reste */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--bg-white);
+        }
+
+        #login-overlay h2 {
+            color: var(--sheriff-gold);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        #login-overlay p {
+            margin-bottom: 20px;
+            color: #E0D5C1;
+            font-size: 1.1rem;
+        }
+
+        .login-box {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 4px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-top: 4px solid var(--sheriff-gold);
+        }
+
+        #password-input {
+            padding: 12px;
+            width: 250px;
+            font-size: 1.2rem;
+            text-align: center;
+            border: none;
+            border-radius: 3px;
+            margin-bottom: 15px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        #password-input:focus {
+            outline: 2px solid var(--sheriff-gold);
+        }
+
+        .btn-login {
+            padding: 12px 25px;
+            background: var(--sheriff-gold);
+            color: var(--sheriff-dark-brown);
+            border: none;
+            border-radius: 3px;
+            font-family: 'Oswald', sans-serif;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .btn-login:hover {
+            background: #f1c40f;
+        }
+
+        /* Message d'erreur caché par défaut */
+        #login-error {
+            color: #ff4d4d;
+            margin-top: 15px;
+            font-weight: bold;
+            display: none; 
+        }
+
+        /* --- FIN CONNEXION --- */
+
         /* Navigation */
         nav {
             background: var(--sheriff-brown);
@@ -118,11 +199,6 @@
             background-color: var(--bg-off-white);
         }
 
-        .form-group input:focus, .form-group select:focus {
-            outline: none;
-            border-color: var(--sheriff-brown);
-        }
-
         .btn-submit {
             width: 100%;
             padding: 12px;
@@ -188,6 +264,19 @@
 </head>
 <body>
 
+    <!-- ÉCRAN DE VERROUILLAGE -->
+    <div id="login-overlay">
+        <h2>⭐ ACCÈS RESTREINT ⭐</h2>
+        <p>Ce terminal est réservé au Bureau de l'Instruction (SASD).</p>
+        <div class="login-box">
+            <input type="password" id="password-input" placeholder="Code d'autorisation...">
+            <br>
+            <button class="btn-login" onclick="checkPassword()">DÉVERROUILLER</button>
+            <p id="login-error">Code incorrect (10-20). Accès refusé.</p>
+        </div>
+    </div>
+
+    <!-- CONTENU DU PANEL (Masqué par l'écran noir ci-dessus) -->
     <nav>
         <div class="logo"><span>⭐</span> BUREAU DE L'INSTRUCTION</div>
         <a href="index.html" class="btn-back">⬅ Retour au site</a>
@@ -195,7 +284,6 @@
 
     <div class="admin-container">
         
-        <!-- Colonne Gauche : Ajout d'un Agent -->
         <div class="panel">
             <h2 class="panel-title">Enregistrer un Brevet</h2>
             <form id="roster-form">
@@ -213,9 +301,11 @@
                         <option value="">Sélectionner...</option>
                         <option value="Deputy I">Deputy I</option>
                         <option value="Deputy II">Deputy II</option>
-                        <option value="Corporal">Corporal</option>
-                        <option value="Sergeant">Sergeant</option>
-                        <option value="Lieutenant+">Lieutenant+</option>
+                        <option value="Deputy III">Deputy III</option>
+						<option value="SLD">SLD</option>
+                        <option value="Sergent">Sergent</option>
+						<option value="Sergent Chef">Sergent Chef</option>
+                        <option value="Lieutenant">Lieutenant</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -232,7 +322,6 @@
             </form>
         </div>
 
-        <!-- Colonne Droite : Le Roster -->
         <div class="panel">
             <h2 class="panel-title">Roster Officiel - Division HP</h2>
             <div style="overflow-x:auto;">
@@ -257,15 +346,45 @@
     </div>
 
     <script>
+        // --- SYSTÈME DE CONNEXION ---
+        function checkPassword() {
+            const input = document.getElementById('password-input').value;
+            const errorMessage = document.getElementById('login-error');
+            
+            // ⚠️ MODIFIEZ LE MOT DE PASSE ENTRE LES GUILLEMETS CI-DESSOUS ⚠️
+            const CODE_SECRET = "HP2026"; 
+
+            if (input === CODE_SECRET) {
+                // Si le code est bon, on fait disparaître l'écran noir
+                document.getElementById('login-overlay').style.display = 'none';
+            } else {
+                // Si le code est faux, on affiche une erreur et on efface la case
+                errorMessage.style.display = 'block';
+                document.getElementById('password-input').value = '';
+                
+                // Optionnel : renvoyer sur la page d'accueil au bout de 2 secondes
+                setTimeout(() => {
+                    window.location.href = "index.html";
+                }, 2000);
+            }
+        }
+
+        // Permet de valider le mot de passe en appuyant sur la touche "Entrée"
+        document.getElementById('password-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+        // --- FIN SYSTÈME DE CONNEXION ---
+
+
         // Clé pour le stockage local
         const STORAGE_KEY = 'sasd_academy_roster';
-        
         const form = document.getElementById('roster-form');
         const tableBody = document.getElementById('roster-table-body');
 
         // Fonction pour charger les données depuis la mémoire du navigateur
         function loadRoster() {
-            // Récupère les données ou crée un tableau vide
             const data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
             tableBody.innerHTML = ''; 
             
@@ -274,7 +393,6 @@
                 return;
             }
 
-            // Affiche les agents (en inversant l'ordre pour avoir les plus récents en haut)
             data.slice().reverse().forEach(agent => {
                 const row = `
                     <tr>
@@ -296,7 +414,6 @@
             
             const dateActuelle = new Date().toLocaleDateString('fr-FR');
             
-            // Création de l'objet agent avec un identifiant unique
             const newAgent = {
                 id: Date.now(), 
                 matricule: document.getElementById('reg-matricule').value,
@@ -306,7 +423,6 @@
                 date: dateActuelle
             };
 
-            // Récupération, ajout et sauvegarde
             const data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
             data.push(newAgent);
             localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
@@ -319,14 +435,13 @@
         window.deleteAgent = function(id) {
             if(confirm("Attention (10-99) : Confirmez-vous la suppression de ce dossier d'instructeur ?")) {
                 let data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-                // On filtre pour garder tous les agents SAUF celui qu'on veut supprimer
                 data = data.filter(agent => agent.id !== id);
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
                 loadRoster();
             }
         };
 
-        // Chargement automatique au lancement de la page
+        // Chargement automatique
         loadRoster();
     </script>
 </body>

@@ -9,14 +9,13 @@
 
     <style>
         :root {
-            /* Nouvelle palette Blanc & Marron SASD */
-            --sheriff-brown: #4A3018;       /* Marron principal */
-            --sheriff-dark-brown: #2C1E11;  /* Marron très foncé (presque noir) */
-            --sheriff-light-brown: #8B5A2B; /* Marron clair (accents) */
-            --sheriff-gold: #D4AF37;        /* Or (conservé uniquement pour l'étoile/liserés) */
-            --bg-white: #FFFFFF;            /* Blanc pur */
-            --bg-off-white: #F9F6F0;        /* Blanc légèrement cassé pour séparer les sections */
-            --text-dark: #2C1E11;           /* Texte sombre */
+            --sheriff-brown: #4A3018;       
+            --sheriff-dark-brown: #2C1E11;  
+            --sheriff-light-brown: #8B5A2B; 
+            --sheriff-gold: #D4AF37;        
+            --bg-white: #FFFFFF;            
+            --bg-off-white: #F9F6F0;        
+            --text-dark: #2C1E11;           
         }
 
         * {
@@ -63,13 +62,14 @@
         }
 
         .logo span {
-            color: var(--sheriff-gold); /* L'étoile en or */
+            color: var(--sheriff-gold);
         }
 
         .nav-links {
             display: flex;
             gap: 2rem;
             list-style: none;
+            align-items: center;
         }
 
         .nav-links a {
@@ -83,6 +83,11 @@
 
         .nav-links a:hover {
             color: var(--sheriff-gold);
+        }
+
+        /* Bouton Admin Spécial Navigation */
+        .btn-nav-admin {
+            color: var(--sheriff-light-brown) !important;
         }
 
         /* Hero Section */
@@ -320,8 +325,29 @@
             background: var(--sheriff-dark-brown);
             color: #E0D5C1;
             text-align: center;
-            padding: 2rem;
+            padding: 2.5rem 2rem;
             font-size: 0.9rem;
+        }
+
+        .btn-footer-admin {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 8px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--bg-white);
+            text-decoration: none;
+            border-radius: 3px;
+            font-family: 'Oswald', sans-serif;
+            font-weight: bold;
+            letter-spacing: 1px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            transition: all 0.3s;
+        }
+
+        .btn-footer-admin:hover {
+            background: var(--sheriff-light-brown);
+            color: var(--bg-white);
         }
 
         @media (max-width: 768px) {
@@ -334,13 +360,14 @@
 <body>
 
     <nav>
-        <div class="logo"><span>⭐</span> SASD ACADEMY</div>
         <ul class="nav-links">
-            <li><a href="#accueil">Quartier Général</a></li>
-            <li><a href="#formations">Cursus HP</a></li>
-            <li><a href="#about">Bureau de l'Instruction</a></li>
-            <li><a href="#contact">Dispatch</a></li>
-        </ul>
+    <li><a href="#accueil">Quartier Général</a></li>
+    <li><a href="#formations">Cursus HP</a></li>
+    <li><a href="effectifs.html">Effectifs</a></li> <!-- C'est ici ! -->
+    <li><a href="#about">Bureau de l'Instruction</a></li>
+    <li><a href="#contact">Dispatch</a></li>
+    <li><a href="admin.html" class="btn-nav-admin">🔒 Panel Admin</a></li>
+</ul>
     </nav>
 
     <section id="accueil" class="hero">
@@ -431,6 +458,7 @@
 
     <footer>
         <p>© 2026 San Andreas Sheriff's Department - Training Bureau. Sécurisé & Confidentiel.</p>
+        <a href="admin.html" class="btn-footer-admin">🔒 Accès Instructeurs (Roster)</a>
     </footer>
 
     <script>
