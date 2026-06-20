@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SASD - Panel Instructeur</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --sheriff-brown: #4A3018;
+            --sheriff-dark-brown: #2C1E11;
+            --sheriff-light-brown: #8B5A2B;
+            --sheriff-gold: #D4AF37;
+            --bg-white: #FFFFFF;
+            --bg-off-white: #F9F6F0;
+            --text-dark: #2C1E11;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--bg-off-white);
+        }
+
+        h1, h2, h3, .logo, th {
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--sheriff-brown);
+            padding: 1rem 5%;
+            border-bottom: 3px solid var(--sheriff-gold);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: var(--bg-white);
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo span { color: var(--sheriff-gold); }
+
+        .btn-back {
+            color: var(--bg-white);
+            text-decoration: none;
+            font-weight: bold;
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .btn-back:hover { color: var(--sheriff-gold); }
+
+        /* Conteneur principal */
+        .admin-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 5%;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .admin-container { grid-template-columns: 1fr; }
+        }
+
+        /* Panneaux */
+        .panel {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 4px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid #EAEAEA;
+            border-top: 5px solid var(--sheriff-brown);
+        }
+
+        .panel-title {
+            color: var(--sheriff-brown);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            border-bottom: 2px solid var(--bg-off-white);
+            padding-bottom: 0.5rem;
+        }
+
+        /* Formulaire */
+        .form-group { margin-bottom: 1.2rem; }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.3rem;
+            color: var(--sheriff-brown);
+            font-family: 'Oswald', sans-serif;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #CCC;
+            border-radius: 3px;
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-off-white);
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--sheriff-brown);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 12px;
+            background: var(--sheriff-brown);
+            color: var(--bg-white);
+            border: none;
+            border-radius: 3px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+            letter-spacing: 1px;
+        }
+
+        .btn-submit:hover { background: var(--sheriff-light-brown); }
+
+        /* Tableau */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        th {
+            background: var(--sheriff-brown);
+            color: var(--bg-white);
+            padding: 12px;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #EAEAEA;
+            font-size: 0.95rem;
+        }
+
+        tr:hover { background: var(--bg-off-white); }
+
+        .badge-module {
+            background: var(--sheriff-light-brown);
+            color: var(--bg-white);
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .btn-delete {
+            background: none;
+            border: none;
+            color: #d9534f;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: transform 0.2s;
+        }
+
+        .btn-delete:hover {
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo"><span>⭐</span> BUREAU DE L'INSTRUCTION</div>
+        <a href="index.html" class="btn-back">⬅ Retour au site</a>
+    </nav>
+
+    <div class="admin-container">
+        
+        <!-- Colonne Gauche : Ajout d'un Agent -->
+        <div class="panel">
+            <h2 class="panel-title">Enregistrer un Brevet</h2>
+            <form id="roster-form">
+                <div class="form-group">
+                    <label>Matricule</label>
+                    <input type="text" id="reg-matricule" placeholder="Ex: 142" required>
+                </div>
+                <div class="form-group">
+                    <label>Nom de l'Agent</label>
+                    <input type="text" id="reg-nom" placeholder="Ex: D. Smith" required>
+                </div>
+                <div class="form-group">
+                    <label>Grade Actuel</label>
+                    <select id="reg-grade" required>
+                        <option value="">Sélectionner...</option>
+                        <option value="Deputy I">Deputy I</option>
+                        <option value="Deputy II">Deputy II</option>
+                        <option value="Corporal">Corporal</option>
+                        <option value="Sergeant">Sergeant</option>
+                        <option value="Lieutenant+">Lieutenant+</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Brevet Validé</label>
+                    <select id="reg-module" required>
+                        <option value="">Sélectionner...</option>
+                        <option value="Conduite Code 3">Conduite Code 3</option>
+                        <option value="Manoeuvres PIT">Manoeuvres PIT</option>
+                        <option value="Interceptor HP">Interceptor HP</option>
+                        <option value="Off-Road Tactique">Off-Road Tactique</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-submit">VALIDER L'ENREGISTREMENT</button>
+            </form>
+        </div>
+
+        <!-- Colonne Droite : Le Roster -->
+        <div class="panel">
+            <h2 class="panel-title">Roster Officiel - Division HP</h2>
+            <div style="overflow-x:auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Matricule</th>
+                            <th>Nom</th>
+                            <th>Grade</th>
+                            <th>Brevet Obtenu</th>
+                            <th>Date d'examen</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="roster-table-body">
+                        <!-- Les données s'afficheront ici -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Clé pour le stockage local
+        const STORAGE_KEY = 'sasd_academy_roster';
+        
+        const form = document.getElementById('roster-form');
+        const tableBody = document.getElementById('roster-table-body');
+
+        // Fonction pour charger les données depuis la mémoire du navigateur
+        function loadRoster() {
+            // Récupère les données ou crée un tableau vide
+            const data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+            tableBody.innerHTML = ''; 
+            
+            if(data.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="6" style="text-align:center; font-style:italic;">Aucun agent certifié dans la base de données locale.</td></tr>';
+                return;
+            }
+
+            // Affiche les agents (en inversant l'ordre pour avoir les plus récents en haut)
+            data.slice().reverse().forEach(agent => {
+                const row = `
+                    <tr>
+                        <td><b>#${agent.matricule}</b></td>
+                        <td>${agent.nom}</td>
+                        <td>${agent.grade}</td>
+                        <td><span class="badge-module">${agent.module}</span></td>
+                        <td>${agent.date}</td>
+                        <td><button class="btn-delete" onclick="deleteAgent(${agent.id})" title="Supprimer le dossier">❌</button></td>
+                    </tr>
+                `;
+                tableBody.innerHTML += row;
+            });
+        }
+
+        // Fonction pour ajouter un nouvel agent
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const dateActuelle = new Date().toLocaleDateString('fr-FR');
+            
+            // Création de l'objet agent avec un identifiant unique
+            const newAgent = {
+                id: Date.now(), 
+                matricule: document.getElementById('reg-matricule').value,
+                nom: document.getElementById('reg-nom').value,
+                grade: document.getElementById('reg-grade').value,
+                module: document.getElementById('reg-module').value,
+                date: dateActuelle
+            };
+
+            // Récupération, ajout et sauvegarde
+            const data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+            data.push(newAgent);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+
+            form.reset(); 
+            loadRoster(); 
+        });
+
+        // Fonction pour supprimer un agent
+        window.deleteAgent = function(id) {
+            if(confirm("Attention (10-99) : Confirmez-vous la suppression de ce dossier d'instructeur ?")) {
+                let data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+                // On filtre pour garder tous les agents SAUF celui qu'on veut supprimer
+                data = data.filter(agent => agent.id !== id);
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+                loadRoster();
+            }
+        };
+
+        // Chargement automatique au lancement de la page
+        loadRoster();
+    </script>
+</body>
+</html>
