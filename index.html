@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SASD - Académie de Conduite</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f6f9;
+        }
+
+        /* Navigation */
+        nav {
+            background: #0b1320; /* Bleu très sombre / Noir tactique */
+            padding: 1rem 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #d4af37; /* Liseré Or Shérif */
+        }
+
+        .logo {
+            color: #d4af37;
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #d4af37;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #1c2833 0%, #0b1320 100%);
+            color: white;
+            padding: 150px 5% 100px;
+            text-align: center;
+            border-bottom: 4px solid #d4af37;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+            color: #bdc3c7;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: #d4af37; /* Or Shérif */
+            color: #0b1320;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+            background: #f1c40f;
+        }
+
+        /* Formations Section */
+        .formations {
+            padding: 80px 5%;
+            background: #eceff1;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #1c2833;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .formations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .formation-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, border-bottom 0.3s;
+            border-bottom: 4px solid transparent;
+        }
+
+        .formation-card:hover {
+            transform: translateY(-10px);
+            border-bottom: 4px solid #d4af37;
+        }
+
+        .formation-img {
+            height: 200px;
+            background: linear-gradient(45deg, #1c2833, #2c3e50);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4.5rem;
+        }
+
+        .formation-content {
+            padding: 1.5rem;
+        }
+
+        .formation-content h3 {
+            color: #1c2833;
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        .formation-content p {
+            color: #555;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            min-height: 60px;
+        }
+
+        .formation-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .prerequis {
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: #c0392b;
+            background: #fadbd8;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .duration {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        /* À propos */
+        .about {
+            padding: 80px 5%;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about p {
+            font-size: 1.1rem;
+            color: #444;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Contact */
+        .contact {
+            padding: 80px 5%;
+            background: #0b1320;
+            color: white;
+            border-top: 4px solid #d4af37;
+        }
+
+        .contact .section-title {
+            color: white;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #152238;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #d4af37;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            background: #0b1320;
+            border: 1px solid #2c3e50;
+            border-radius: 4px;
+            font-size: 1rem;
+            color: white;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #d4af37;
+        }
+
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 15px;
+            background: #d4af37;
+            color: #0b1320;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-submit:hover {
+            background: #f1c40f;
+        }
+
+        /* Footer */
+        footer {
+            background: #060a12;
+            color: #7f8c8d;
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">🚔 SASD ACADEMY</div>
+        <ul class="nav-links">
+            <li><a href="#accueil">Quartier Général</a></li>
+            <li><a href="#formations">Cursus HP</a></li>
+            <li><a href="#about">Bureau de l'Instruction</a></li>
+            <li><a href="#contact">Demande de Session</a></li>
+        </ul>
+    </nav>
+
+    <section id="accueil" class="hero">
+        <h1>Unité de Conduite Haute Performance</h1>
+        <p>Formations tactiques avancées pour les officiers du San Andreas Sheriff's Department. Dominez la route, sécurisez vos interceptions et maîtrisez votre véhicule de patrouille en toute situation.</p>
+        <a href="#formations" class="btn">Consulter le Cursus</a>
+    </section>
+
+    <section id="formations" class="formations">
+        <h2 class="section-title">Modules de Formation</h2>
+        <div class="formations-grid">
+
+            <div class="formation-card">
+                <div class="formation-img">🚓</div>
+                <div class="formation-content">
+                    <h3>Conduite Code 3 & Poursuite</h3>
+                    <p>Fondamentaux de la conduite sous sirène. Maîtrise des trajectoires, anticipation du trafic et communication radio en poursuite.</p>
+                    <div class="formation-meta">
+                        <span class="prerequis">Requis: Deputy I</span>
+                        <span class="duration">⏱️ 2h Théorie + Pratique</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="formation-card">
+                <div class="formation-img">💥</div>
+                <div class="formation-content">
+                    <h3>Manoeuvres PIT & Interception</h3>
+                    <p>Apprentissage des techniques d'immobilisation de véhicules (Pursuit Intervention Technique), gestion des blocages et box-in.</p>
+                    <div class="formation-meta">
+                        <span class="prerequis">Requis: Deputy II</span>
+                        <span class="duration">⏱️ 3h Pratique intensive</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="formation-card">
+                <div class="formation-img">🏎️</div>
+                <div class="formation-content">
+                    <h3>Certification Interceptor (HP)</h3>
+                    <p>Formation sur véhicules à haute vélocité (Slick-top, sportives). Contrôle des dérapages, freinage d'urgence à très haute vitesse.</p>
+                    <div class="formation-meta">
+                        <span class="prerequis">Requis: Brevet PIT</span>
+                        <span class="duration">⏱️ 4h Évaluation</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="formation-card">
+                <div class="formation-img">⛰️</div>
+                <div class="formation-content">
+                    <h3>Conduite Off-Road Tactique</h3>
+                    <p>Poursuites en milieux ruraux, montagneux et forestiers. Utilisation optimale des SUV du département et gestion de l'adhérence.</p>
+                    <div class="formation-meta">
+                        <span class="prerequis">Requis: Deputy I</span>
+                        <span class="duration">⏱️ 2h Pratique</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <h2 class="section-title">Bureau de l'Instruction</h2>
+        <p>Le département d'instruction de conduite du SASD est composé d'instructeurs certifiés par l'État, dédiés à la sécurité et à l'efficacité de nos effectifs sur le terrain.</p>
+        <p>Notre doctrine repose sur un principe simple : la vitesse n'est un atout que si elle est parfaitement maîtrisée. Chaque module est conçu pour repousser vos limites dans un environnement contrôlé afin de garantir l'excellence lors de vos déploiements en juridiction.</p>
+    </section>
+
+    <section id="contact" class="contact">
+        <h2 class="section-title">Demande de Session (Dispatch)</h2>
+        <form class="contact-form">
+            <div class="form-group">
+                <label for="name">Matricule & Nom (ex: 142 - D. Smith)</label>
+                <input type="text" id="name" placeholder="Votre identification..." required>
+            </div>
+            <div class="form-group">
+                <label for="grade">Grade Actuel</label>
+                <input type="text" id="grade" placeholder="Deputy I, Corporal..." required>
+            </div>
+            <div class="form-group">
+                <label for="message">Module(s) souhaité(s) et disponibilités</label>
+                <textarea id="message" placeholder="Indiquez vos jours de service pour planifier l'évaluation..." required></textarea>
+            </div>
+            <button type="submit" class="btn-submit">Transmettre au Bureau</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>© 2026 San Andreas Sheriff's Department - Training Bureau. Sécurisé & Confidentiel.</p>
+    </footer>
+
+<script>
+        // Navigation fluide
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Gestion du formulaire et envoi vers Discord
+        document.querySelector('.contact-form').addEventListener('submit', function(e) {
+            e.preventDefault(); // Empêche la page de se recharger
+
+            // --- ⚠️ REMPLACEZ LE LIEN CI-DESSOUS PAR VOTRE URL WEBHOOK DISCORD ⚠️ ---
+            const webhookUrl = "https://discord.com/api/webhooks/1517979429819646023/FvBg9nSxVWeqtLIxNGOZjhK8pE0IzjYJu-jf905pC0TPdRYu0wHfbGjqfXvhFwU93f82";
+
+            // Récupération des données tapées par l'agent
+            const nomMatricule = document.getElementById('name').value;
+            const grade = document.getElementById('grade').value;
+            const message = document.getElementById('message').value;
+
+            // Création du message "Embed" (format stylisé pour Discord)
+            const payload = {
+                username: "Dispatch Académie HP",
+                avatar_url: "https://i.imgur.com/3Z8V8hV.png", // Petite icône de police générique
+                embeds: [{
+                    title: "🚨 Nouvelle Demande de Session HP",
+                    color: 13938487, // Code couleur pour le "Or Shérif"
+                    fields: [
+                        {
+                            name: "👮 Matricule & Nom",
+                            value: nomMatricule,
+                            inline: true
+                        },
+                        {
+                            name: "⭐ Grade",
+                            value: grade,
+                            inline: true
+                        },
+                        {
+                            name: "📅 Modules & Disponibilités",
+                            value: message
+                        }
+                    ],
+                    footer: {
+                        text: "San Andreas Sheriff's Department - Training Bureau"
+                    },
+                    timestamp: new Date().toISOString()
+                }]
+            };
+
+            // Envoi des données à Discord
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Transmission réussie (10-4). Votre demande a été envoyée au Bureau de l\'Instruction.');
+                    document.querySelector('.contact-form').reset(); // Vide le formulaire
+                } else {
+                    alert('Erreur de transmission (10-20). Impossible de joindre le central.');
+                }
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+                alert('Erreur système. Vérifiez la fréquence radio.');
+            });
+        });
+    </script>
